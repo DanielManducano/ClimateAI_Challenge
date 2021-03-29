@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  {% include "App/Fixed/Header.html"%}
+  <body >
+    {% include "App/Fixed/NavBar.html"%}
+
+    <div class="col-md-6">
+      <div class="form-group">
+              <label class="control-label col-sm-3">Date To Predict: </label>
+              <div class="col-sm-9">
+                  <div class="input-group">
+                      <input type="date" class="form-control datepicker-autoclose" placeholder="yyyy-mm-dd" name="Fecha" id="Fecha" autocomplete="off">
+                      
+                  </div><!-- input-group -->
+              </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-12"> 
+      <div class="form-group">  
+          <button  onclick="process()" type="button" class="btn btn-trans btn-block btn-default w-lg">
+          <span style="color:black"> <i class="fa fa-search m-r-5"></i>
+              <span> Predict</span>
+              </span>
+          </button>
+      </div>  
+  </div>
+
+    {% include "App/Return/ReturnPredict.html"%}
+
+ 
+    {% include "App/Fixed/FootBody.html"%}
+  </body>
+</html>
+
+<script>
+
+
+  function process(){
+
+    var  DatePred
+    DatePred= $("#Fecha").val();
+
+    var urlTest, urlPosition, urlFinal;
+    urlTest = document.URL;
+    urlPosition = urlTest.lastIndexOf('/');
+    urlFinal = urlTest.slice(0, urlPosition);
+
+    varUrl= urlFinal + "/ReturnPredict";
+    //alert(varUrl);
+    $.ajax({
+    headers: { "X-CSRFToken": '{{csrf_token}}' },
+    method: 'POST',
+    url: varUrl,
+    data:{
+      DatePred: $("#Fecha").val(),
+                },
+                beforeSend:function(data){  
+                    console.log('loading')                  
+                    $(".loader").fadeIn("slow");
+                },
+    success:function(data){
+        $(".loader").fadeOut("slow");
+            $("#GraphVar").html(data)
+            console.log('post')
+
+        }
+                });
+      
+
+  }
+</script>

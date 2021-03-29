@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  {% include "App/Fixed/Header.html"%}
+  <body >
+    {% include "App/Fixed/NavBar.html"%}
+
+    <div>
+      <center><h2 style="color:black">Real Value vs Predicted Value</h2></center>
+      <hr>
+    <div style="width:800;height:1000">
+      {{ Scatter|safe }}
+    </div>
+
+
+
+    {% include "App/Fixed/FootBody.html"%}
+  </body>
+</html>
